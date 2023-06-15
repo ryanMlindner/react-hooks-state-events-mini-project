@@ -15,16 +15,19 @@ function App() {
   }
 
   function filterCategory(category) {
-    let filteredList = TASKS;
-    if (category !== "All") {
-      filteredList = filteredList.filter(task => task.category === category)
-    }
     setCategory(category);
-    setTasks(filteredList);
   }
 
   function createNewTask(taskData) {
     setTasks(taskList => [...taskList, taskData]);
+  }
+
+  function filterList() {
+    let filteredList = taskList;
+    if (selectedCategory !== "All") {
+      filteredList = taskList.filter(task => task.category === selectedCategory)
+    }
+    return filteredList;
   }
 
   return (
@@ -34,7 +37,7 @@ function App() {
         current = {selectedCategory} 
         filterCategory={filterCategory}/>
       <NewTaskForm categories={CATEGORIES} onTaskFormSubmit={createNewTask}/>
-      <TaskList tasks={taskList} deleteTask ={deleteTask}/>
+      <TaskList tasks={filterList()} deleteTask ={deleteTask}/>
     </div>
   );
 }
