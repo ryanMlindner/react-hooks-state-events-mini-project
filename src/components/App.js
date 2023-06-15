@@ -4,8 +4,6 @@ import NewTaskForm from "./NewTaskForm";
 import TaskList from "./TaskList";
 
 import { CATEGORIES, TASKS } from "../data";
-console.log("Here's the data you're working with");
-console.log({ CATEGORIES, TASKS });
 
 function App() {
   const [taskList, setTasks] = useState(TASKS);
@@ -25,13 +23,17 @@ function App() {
     setTasks(filteredList);
   }
 
+  function createNewTask(taskData) {
+    setTasks(taskList => [...taskList, taskData]);
+  }
+
   return (
     <div className="App">
       <h2>My tasks</h2>
       <CategoryFilter categories={CATEGORIES} 
         current = {selectedCategory} 
         filterCategory={filterCategory}/>
-      <NewTaskForm />
+      <NewTaskForm categories={CATEGORIES} onTaskFormSubmit={createNewTask}/>
       <TaskList tasks={taskList} deleteTask ={deleteTask}/>
     </div>
   );
